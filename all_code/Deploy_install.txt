@@ -1,0 +1,72 @@
+# *************************************
+# 功能: Shell脚本使用方式
+# 作者: 王树森
+# 联系: wangshusen@sswang.com，
+# 微信群: 自学自讲—软件工程
+# 抖音号: sswang_yys
+# 版本: v0.1
+# 日期: 2024-01-25
+# *************************************
+
+# 1 获取代码
+git clone https://gitee.com/wshs1117/shell_k8s.git
+
+# 2 看目录结构
+# tree shell_k8s -L 1
+shell_k8s
+├── codes
+├── LICENSE
+├── README.md
+└── shell_k8s
+
+2 directories, 2 files
+
+# 3 修改配置
+# cd shell_k8s/shell_k8s/conf/
+
+# 3.1 修改全局配置
+# cat config
+target_net='10.0.0'                     # 改为自己的网段，在自定义环境部署时候                         
+default_deploy_type='offline'           # 第一次推荐使用online
+default_network_type="flannel"          # 目前暂时支持flannel，后期可以使用calico
+default_repo_type="yes"                 # 推荐使用功能harbor，没有的话，可以使用no
+default_container_engine_type="docker"  # 强烈推荐docker，后期，可以搞contained
+login_user='root'                       # 使用自己的
+login_pass='123456'                     # 使用自己的
+k8s_version="1.28.2"                    # 推荐使用自己的，无论在线还是离线方式部署
+
+# 3.2 修改自定义配置
+# cat hosts
+[k8s-hosts]
+10.0.0.12 kubernetes-master             # 这里的hosts主要是非本地dns的方式部署，推荐改为本地网段地址
+...
+10.0.0.20 kubernetes-register           # 后期脚本支持本地DNS的能力，此处hosts文件重点关注 短域名和ip地址最后一位
+
+
+# 4 部署k8s集群
+# 4.1 一键方式(推荐)
+# cd shell_k8s/shell_k8s/scripts/
+# /bin/bash 01_shell_deploy_k8s.sh
+           Shell操作K8s管理平台
+===========================================================
+1: 一键集群部署     2: 通用基础环境      3: 集群基础环境
+4: K8s集群初始化    5: K8s平台功能实践   6: K8s集群管理功能
+7: K8s离线环境准备  8: 退出操作
+===========================================================
+请输入您要操作的选项id值:             # 直接输入 1 即可
+
+# 4.2 自动化功能定制部署
+# 分别进入到 2、3、4的菜单页面，分别执行 一键功能即可
+
+# 4.3 全流程定制部署
+# 这里面支持所有功能的定制
+# 如果涉及到相关的离线文件，需要提前在 K8s离线环境准备 里面，把文件获取
+# 如果涉及到有些文件因为网络因素导致无法获取，可以在微信群里面私聊。
+
+# 5 特别注意
+# 5.1 关于集群的节点系统类型
+  推荐：所有节点尽量使用相同的操作系统类型，比如全部是Centos、Ubuntu
+# 5.2 如果你的k8s平台涉及到云原生技术栈解决方案，最好使用本地DNS方式，而不是hosts文件方式。
+# 5.3 关于k8s平台的功能定制，我会拆分开两部分：
+  K8s平台方案功能实践 - 侧重于k8s平台解决方案的环境，比如可视化、服务治理、无服务、认证等
+  k8s平台基础功能实践 - 侧重于k8s平台基础功能的环境，比如NFS、Ceph、DNS、longhorn等

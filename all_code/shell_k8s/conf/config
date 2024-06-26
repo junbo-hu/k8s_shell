@@ -1,0 +1,255 @@
+################################################################################
+# 这部分是脚本项目全局的默认配置属性，主要作用于一键功能定制
+
+# [通用配置]
+# 定制集群的默认网段信息，只需要前三位
+target_net='192.168.131'
+# 定制集群的默认部署方式
+default_deploy_type='online'
+# 定制集群的部署类型，alone代表单主master集群，multi代表多主master集群
+cluster_type='alone'
+# 定制集群的部署模式，alone代表独立k8s集群，multi代表多独立k8s集群
+cluster_mode='alone'
+# 定制集群的默认网络解决方案类型
+default_network_type="flannel"
+# 定制kubernetes镜像仓库类型，yes代表使用本地harbor，no代表使用阿里云镜像仓库
+default_repo_type="no"
+# 获取k8s环境初始化镜像文件类型，yes代表提前获取，no代表初始化时从互联网获取
+default_get_image_type="no"
+# k8s集群初始化时候，是否使用本地离线镜像文件，yes代表使用，no代表使用互联网获取
+default_use_image_type="no"
+# 定制集群的默认容器引擎
+default_container_engine_type="docker"
+# 定制k8s集群的软件版本
+k8s_version="1.28.2"
+# 定制harbor的集群类型,alone代表单节点集群，multi代表harbor主从集群
+default_harbor_cluster_type="alone"
+
+################################################################################
+# 这部分是一些基础用户、目录相关的定制信息
+
+# [基础认证信息]
+login_user='root'
+login_pass='hujunbo'
+
+# [基础文件信息]
+host_name='hosts'
+host_target_dir='/etc'
+host_file="${host_target_dir}/${host_name}"
+data_dir='/data'
+target_dir="${data_dir}/softs"
+server_dir="${data_dir}/server"
+
+# [基础目录信息]
+root_dir=$(dirname $PWD)
+conf_dir="${root_dir}/conf"
+scripts_dir="${root_dir}/scripts"
+softs_dir="${root_dir}/softs"
+yaml_dir="${root_dir}/yaml"
+subfunc_dir="${scripts_dir}/subfunc"
+service_conf_dir="/lib/systemd/system"
+service_bin_dir='/usr/local/bin'
+ext_scripts_dir='ext_scripts'
+default_backup_dir="${data_dir}/backup"
+
+# [软件源相关]
+k8s_sources_repo_addr='mirror.tuna.tsinghua.edu.cn'
+centos_repo_dir='/etc/yum.repos.d'
+centos_repo_file='kubernetes.repo'
+ubuntu_repo_dir='/etc/apt/sources.list.d'
+ubuntu_repo_file='kubernetes.list'
+
+# [远程主机资源清单目录]
+remote_dir="${server_dir}/yaml"
+
+# [ssh集群认证相关]
+# 创建k8s集群的时候，是否需要重置部署服务器的ssh秘钥信息
+# no代表不需要重新生成ssh秘钥对
+k8s_cluster_create_reset_ssh="yes"
+
+# [harbor镜像导入信息]
+# harbor仓库部署的时候，是否导入备份镜像文件
+backup_image_load_harbor="no"
+
+################################################################################
+# 这部分是项目所依赖文件的 离线目录、软件版本、软件地址、文件名称等信息
+
+# [expect文件信息]
+expect_dir="${softs_dir}/expect"
+expect_centos_dir="${expect_dir}/centos"
+expect_ubuntu_dir="${expect_dir}/ubuntu"
+
+# [docker文件信息]
+docker_version="24.0.7"
+docker_site_url='https://download.docker.com/linux/static/stable/x86_64'
+docker_tar_file="docker-${docker_version}.tgz"
+docker_tar_url="${docker_site_url}/${docker_tar_file}"
+docker_dir="${softs_dir}/docker-ce/${docker_version}"
+
+# [cri-dockerd文件信息]
+cri_dockerd_version="0.3.2"
+cri_name='cri-dockerd'
+cri_github_url='https://github.com/Mirantis'
+cri_github_tags="${cri_github_url}/${cri_name}/tags"
+cri_dockerd_dir="${softs_dir}/cri_dockerd/${cri_dockerd_version}"
+cri_softs_name="${cri_name}-${cri_dockerd_version}.amd64.tgz"
+cri_softs_site="${cri_github_url}/${cri_name}/releases/download"
+cri_softs_url="${cri_softs_site}/v${cri_dockerd_version}/${cri_softs_name}"
+
+# [docker-compose文件信息]
+compose_version='v2.23.3'
+compose_cmd_name='docker-compose'
+compose_bin_dir="/usr/bin"
+compose_file_name="${compose_cmd_name}-linux-x86_64"
+compose_github_url='https://github.com/docker/compose'
+compose_github_tags="${compose_github_url}/tags"
+compose_softs_site="${compose_github_url}/releases/download/${compose_version}/${compose_file_name}"
+compose_dir="${softs_dir}/compose/${compose_version}"
+
+# [harbor文件信息]
+harbor_version='v2.5.0'
+harbor_dir="${softs_dir}/harbor/${harbor_version}"
+harbor_name='harbor'
+harbor_image="harbor.${harbor_version}.tar.gz"
+harbor_softs="harbor-offline-installer-${harbor_version}.tgz"
+harbor_github_url="https://github.com/goharbor/harbor"
+harbor_github_tags="${harbor_github_url}/tags"
+harbor_site="${harbor_github_url}/releases/download"
+harbor_url="${harbor_site}/${harbor_version}/${harbor_softs}"
+harbor_backup="${default_backup_dir}/harbor"
+
+# [kubernetes文件信息]
+# cri_tools_softs='cri-tools=1.26.0-00'
+# k8s_cni_softs='kubernetes-cni=1.2.0-00'
+k8s_dir="${softs_dir}/kubernetes/${k8s_version}"
+k8s_centos_dir="${k8s_dir}/centos"
+k8s_ubuntu_dir="${k8s_dir}/ubuntu"
+
+# [离线镜像文件相关]
+images_dir="${root_dir}/images"
+k8s_cluster_images="k8s_cluster_images.tar"
+k8s_flannel_images="k8s_flannel_images.tar"
+k8s_calico_images="k8s_calico_images.tar"
+k8s_cilium_images="k8s_cilium_images.tar"
+
+################################################################################
+# 这部分是项目所涉及到的脚本文件和通用主机变量信息
+
+# [通用环境变量]
+all_node_list=$(awk '/kuber/{print $1}' "${conf_dir}/${host_name}")
+all_k8s_list=$(awk '/-master|node/{print $1}' "${conf_dir}/${host_name}")
+k8s_master_list=$(awk '/-master/{print $1}' "${conf_dir}/${host_name}")
+k8s_node_list=$(awk '/-node/{print $1}' "${conf_dir}/${host_name}")
+master1=$(echo ${k8s_master_list} | awk '{print $1}')
+
+# [脚本通用功能函数文件]
+base_func_usage='base_func_usage.sh'
+base_func_menu='base_func_menu.sh'
+base_func_exec='base_func_exec.sh'
+k8s_func_exec='k8s_func_exec.sh'
+base_cluster_exec='base_cluster_exec.sh'
+k8s_cluster_deploy='k8s_cluster_deploy.sh'
+base_func_offline='base_func_offline.sh'
+base_func_image='base_func_image.sh'
+k8s_subfunc_manager='k8s_func_manager.sh'
+k8s_subfunc_clean='k8s_func_clean.sh'
+k8s_subfunc_network='k8s_func_network.sh'
+
+# [ 子功能脚本文件 ]
+base_env_scripts='01_01_general_base_env.sh'
+base_cluster_scripts='01_02_cluster_base_env.sh'
+base_kernel_scripts='01_02_01_kubernetes_kernel_conf.sh'
+base_docker_scripts='01_02_02_kubernetes_docker_install.sh'
+base_docker_offline_scripts='01_02_02_kubernetes_docker_offline.sh'
+base_cri_docker_scripts='01_02_03_kubernetes_cri_dockerd_install.sh'
+base_harbor_remote_scripts='01_02_04_kubernetes_harbor_install_remote.sh'
+base_harbor_install_scripts='01_02_05_kubernetes_harbor_install.sh'
+k8s_cluster_init_scripts='01_03_kubernetes_cluster_create.sh'
+k8s_cluster_manager_scripts='01_04_kubernetes_cluster_manager.sh'
+k8s_cluster_function_manager_scripts='01_04_01_kubernetes_cluster_function_manager.sh'
+k8s_cluster_clean_manager_scripts='01_04_02_kubernetes_cluster_clean_manager.sh'
+k8s_cluster_network_manager_scripts='01_04_03_kubernetes_cluster_network_manager.sh'
+k8s_cluster_storage_manager_scripts='01_04_04_kubernetes_cluster_storage_manager.sh'
+k8s_cluster_depend_manager_scripts='01_04_05_kubernetes_cluster_depend_manager.sh'
+k8s_cluster_resource_manager_scripts='01_04_06_kubernetes_cluster_resource_manager.sh'
+kubernetes_offline_prepare='01_07_kubernetes_offline_prepare.sh'
+k8s_master_tail_scripts='k8s_master_tail.sh'
+k8s_node_centos_tail_scripts='k8s_node_centos_tail.sh'
+
+################################################################################
+# 这部分是k8s集群项目所依赖的集群基础环境信息 
+
+# [docker相关配置]
+docker_service_conf="docker.service"
+docker_daemon_dir='/etc/docker'
+docker_daemon_json='daemon.json'
+
+# [CRI软件信息]
+cri_service_conf="${cri_name}.service"
+cri_socket_conf="${cri_name}.socket"
+
+# [CNI相关信息]
+cni_conf_dir="/etc/cni/net.d"
+
+# [harbor配置]
+harbor_admin='admin'
+harbor_admin_passwd='123456'
+harbor_user='sswang'
+harbor_passwd='A12345678a'
+harbor_my_repo='sswang'
+harbor_k8s_repo='google_containers'
+harbor_addr=$(grep register /etc/hosts | awk '{print $2}')
+harbor_http_type="http"
+harbor_url="${harbor_http_type}://${harbor_addr}"
+harbor_ver='api/version'
+user_api='api/v2.0/users'
+proj_api='api/v2.0/projects'
+image_api='api/v2.0/search?q='
+ali_mirror='registry.aliyuncs.com/google_containers'
+harbor_images_list_file='/tmp/harbor-image.txt'
+
+# [ETCD配置信息]
+etcdctl_cmd_dir='/usr/local/bin'
+etcd_data_dir="/var/lib/etcd"
+etcd_pki_dir="/etc/kubernetes/pki/etcd"
+etcd_mainfest_dir="/etc/kubernetes/manifests"
+etcd_backup_dir="/${default_backup_dir}/etcd"
+etcd_db_backup_dir="${etcd_backup_dir}/db"
+etcd_data_backup_dir="${etcd_backup_dir}/data"
+etcd_endpoint="${master1}:2379"
+
+################################################################################
+# 这部分是k8s项目的其他信息，比如cri接口、附件相关、网络相关、解决方案相关功能 
+
+# [Kubernetes相关]
+cri_options='--cri-socket=unix:///var/run/cri-dockerd.sock'
+cluster_init_msg_file='cluster_init_msg.txt'
+
+# [Kubernetes初始化网段]
+K8S_SVC_CIDR_DEFINE='10.96.0.0/12'
+K8S_POD_CIDR_DEFINE='10.244.0.0/16'
+
+# [Kubernetes网络使用网卡]
+K8S_NODE_NET_DEV="ens33"
+
+# [k8s附件相关]
+addons_dir="${root_dir}/addons"
+addons_dashboard="${addons_dir}/dashboard"
+addons_network="${addons_dir}/network"
+addons_monitor="${addons_dir}/monitor"
+addons_sc="${addons_dir}/storageclass"
+addons_flannel="${addons_network}/flannel"
+addons_calico="${addons_network}/calico"
+
+# [k8s网络相关]
+flannel_url='https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation'
+flannel_yaml='kube-flannel.yml'
+flannel_ns="kube-flannel"
+flannel_ds_name="${flannel_ns}-ds"
+
+calico_version="3.25"
+temp_version=$(echo "${calico_version}" | awk -F'.' '{print $1"-"$2}')
+calico_url="https://calico-v${temp_version}.netlify.app/archive/v${calico_version}/manifests/calico.yaml"
+calico_yaml="kube-calico.yml"
+calico_ns="kube-system"
+calico_ds_name="calico-node"

@@ -1,0 +1,8 @@
+            - name: CALICO_IPV4POOL_CIDR
+              value: "10.244.0.0/16"
+            - name: CALICO_IPV4POOL_BLOCK_SIZE
+              value: "24"
+            - name: USE_POD_CIDR
+              value: "true"
+            - name: IP_AUTODETECTION_METHOD
+              value: "interface=ens33"

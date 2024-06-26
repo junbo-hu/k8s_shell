@@ -1,0 +1,41 @@
+vim信息展示格式
+syntax on	    语法高亮显示		set autoindent      设置自动缩进
+set tabstop=2       设置Tab键宽度		set expandtab       将Tab键宽度转换为空格
+set number           显示行号			set cursorline        光标所在行显示下划线
+set showmatch     成对儿符号高亮显示	        set paste 	    以粘贴模式粘贴复制的内容
+
+# 三种模式
+# 命令模式     Esc  + : , 写上面所有的属性操作 
+# 编辑模式     i s a O o
+# 查看模式     ESC 
+
+
+# tab 演示,默认8个空格
+	1	1	1	1
+					s
+
+
+# 成对儿符号  -- shell脚本中非常重要
+{} [] () "" '' ``  """ xxx """
+
+
+# 开发脚本
+# 在开发岗位中，代码的逻辑往往与代码的层次有一定的关系
+# 同一个层次的代码可以共同使用，相当于一个代码块，不同层次会导致异常。
+# shell 中的 缩进，没有太大意义，美观
+if [xxx] 
+then
+  echo xxx
+else
+  echo xxx
+fi
+
+# 1 
+# if
+	# then
+		# 	echo 
+			# else
+				# xxx
+
+# 保证cat的时候，tab也是空格
+# :set expandtab +:%retab!2

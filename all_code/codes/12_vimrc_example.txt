@@ -1,0 +1,16 @@
+set tabstop=2
+set expandtab
+set paste
+set autoindent
+
+autocmd BufNewFile *.sh exec ":call ShellTitle()"       
+function  ShellTitle()
+   call append(0,"#!/bin/bash")
+	 call append(1,"# *************************************")
+	 call append(2,"# 功能: Shell脚本模板")
+	 call append(3,"# 作者: 王树森")
+	 call append(4,"# 联系: wangshusen@sswang.com")
+	 call append(5,"# 版本: v0.1"))
+	 call append(6,"# 日期: ".strftime("%Y-%m-%d"))
+	 call append(7,"# *************************************")
+endfunction

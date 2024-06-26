@@ -1,0 +1,14 @@
+#!/usr/bin/expect
+# 1 监听涉及用户交互的命令
+spawn  ssh root@10.0.0.12
+# 2 定位需要输入的位置
+expect "yes/no"
+# 3 传递用户传入的信息
+send "yes\r\r"
+
+# 4 其他用户交互
+expect "password:"
+send "123456\r\r"
+
+# 5 退出expect自动化交互环境
+interact
